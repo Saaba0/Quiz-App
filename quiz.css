@@ -77,3 +77,8 @@ p {
   margin: 0.8em 0.5em;
   color: white;
 }
+
+#score-sheet {
+  font-size: 2em;
+  color: white;
+}

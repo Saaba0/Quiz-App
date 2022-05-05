@@ -7,9 +7,10 @@ const choicesContainer = Array.from(
 const questionHead = document.querySelector("#question-header");
 const questionBox = document.querySelector("#question");
 let currentQuestion;
-let questionIndex = 0;
-let questionNumber = 0;
+let questionIndex;
+let questionNumber;
 let acceptAnswer;
+let correctCount;
 
 let questions = [
   {
@@ -45,6 +46,7 @@ function startQuiz() {
   questionNumber = 1;
   questionIndex = 0;
   acceptAnswer = true;
+  correctCount = 0;
   nextQuestion();
 }
 
@@ -57,6 +59,9 @@ function nextQuestion() {
     choicesContainer.forEach((elem) => {
       elem.removeEventListener("click", checkAnswer);
     });
+
+    endGame();
+
     return;
   }
 
@@ -88,6 +93,7 @@ function checkAnswer(event) {
 
   if (answer === currentQuestion.answer) {
     answerContainer.classList.add("correct");
+    correctCount++;
   } else {
     answerContainer.classList.add("incorrect");
   }
@@ -105,6 +111,13 @@ function checkAnswer(event) {
 function reset(container) {
   container.classList.remove("correct");
   container.classList.remove("incorrect");
+}
+
+function endGame() {
+  let scoreSheet = document.createElement("div");
+  scoreSheet.setAttribute("id", "score-sheet");
+  scoreSheet.innerHTML = "Score: " + correctCount;
+  document.querySelector(".header-container").append(scoreSheet);
 }
 
 choicesContainer.forEach((elem) => {
