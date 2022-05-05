@@ -41,7 +41,24 @@ body {
 }
 
 .choice-container:hover {
+  cursor: pointer;
   background-color: #242861;
+}
+
+.correct {
+  background-color: #1fbe1f;
+}
+
+.correct:hover {
+  background-color: rgb(5, 141, 5);
+}
+
+.incorrect {
+  background-color: rgb(209, 0, 0);
+}
+
+.incorrect:hover {
+  background-color: rgb(209, 0, 0);
 }
 
 #question-header {
@@ -58,5 +75,10 @@ body {
 
 p {
   margin: 0.8em 0.5em;
+  color: white;
+}
+
+#score-sheet {
+  font-size: 2em;
   color: white;
 }
