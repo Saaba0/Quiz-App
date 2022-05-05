@@ -41,6 +41,7 @@ body {
 }
 
 .choice-container:hover {
+  cursor: pointer;
   background-color: #242861;
 }
 

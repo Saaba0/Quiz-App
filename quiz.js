@@ -4,7 +4,10 @@ const choices = document.body.querySelectorAll(".choice");
 const choicesContainer = Array.from(
   document.querySelectorAll(".choice-container")
 );
-
+const questionHead = document.querySelector("#question-header");
+const questionBox = document.querySelector("#question");
+let currentQuestion;
+let questionIndex = 0;
 let questionNumber = 0;
 
 let questions = [
@@ -14,7 +17,7 @@ let questions = [
     choice2: "Yom Kippur",
     choice3: "Kwanza",
     choice4: "Rosh Hashanah",
-    answer: "4",
+    answer: "Rosh Hashanah",
   },
   {
     question: "How many blue stripes are there on the U.S. flag?",
@@ -34,17 +37,70 @@ let questions = [
   },
 ];
 
+/**
+ * Initialize the Quiz and starter variables
+ */
 function startQuiz() {
   questionNumber = 1;
+  questionIndex = 0;
   nextQuestion();
 }
 
-function nextQuestion() {}
+/**
+ * Update Element text, set the new currentQuestion
+ */
+function nextQuestion() {
+  /**
+   * if there's no more questions, disable clicking event for all choices
+   */
+  if (questionIndex > questions.length - 1) {
+    choicesContainer.forEach((elem) => {
+      elem.removeEventListener("click", userAnswer);
+    });
+    return;
+  }
+
+  //grab current question within question array
+  currentQuestion = questions[questionIndex];
+
+  //update webpage elements
+  questionBox.innerText = currentQuestion.question;
+  questionHead.innerText = "Question " + questionNumber;
+
+  for (let i = 0; i < choices.length; i++) {
+    choices[i].innerText = currentQuestion["choice" + (i + 1)];
+  }
+}
+
+/**
+ * check user's answer, update question counter variables
+ */
+function checkAnswer(answer) {
+  if (answer === currentQuestion.answer) {
+    console.log("Got it");
+  } else {
+    console.log("Nah");
+  }
+
+  questionNumber++;
+  questionIndex++;
+
+  //check if there's any more questions to ask
+  if (questionIndex > questions.length - 1) {
+    console.log("Game Over");
+  } else {
+    nextQuestion();
+  }
+}
+
+function userAnswer(event) {
+  console.log(event.target);
+  let elem = event.target.closest(".choice-container");
+  checkAnswer(elem.querySelector(".choice").innerText);
+}
 
 choicesContainer.forEach((elem) => {
-  elem.addEventListener("click", (event) => {
-    alert("cringe");
-  });
+  elem.addEventListener("click", userAnswer);
 });
 
 startQuiz();
