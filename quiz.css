@@ -45,6 +45,22 @@ body {
   background-color: #242861;
 }
 
+.correct {
+  background-color: #1fbe1f;
+}
+
+.correct:hover {
+  background-color: rgb(5, 141, 5);
+}
+
+.incorrect {
+  background-color: rgb(209, 0, 0);
+}
+
+.incorrect:hover {
+  background-color: rgb(209, 0, 0);
+}
+
 #question-header {
   font-size: 2.5em;
   margin-top: 0;

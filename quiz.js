@@ -9,6 +9,7 @@ const questionBox = document.querySelector("#question");
 let currentQuestion;
 let questionIndex = 0;
 let questionNumber = 0;
+let acceptAnswer;
 
 let questions = [
   {
@@ -43,19 +44,18 @@ let questions = [
 function startQuiz() {
   questionNumber = 1;
   questionIndex = 0;
+  acceptAnswer = true;
   nextQuestion();
 }
 
 /**
- * Update Element text, set the new currentQuestion
+ * Update Element text, reset choice container styles, set the new currentQuestion
  */
 function nextQuestion() {
-  /**
-   * if there's no more questions, disable clicking event for all choices
-   */
+  //show "Game Finished" screen if there's no more questions, disable clicking event for all choices,
   if (questionIndex > questions.length - 1) {
     choicesContainer.forEach((elem) => {
-      elem.removeEventListener("click", userAnswer);
+      elem.removeEventListener("click", checkAnswer);
     });
     return;
   }
@@ -70,37 +70,45 @@ function nextQuestion() {
   for (let i = 0; i < choices.length; i++) {
     choices[i].innerText = currentQuestion["choice" + (i + 1)];
   }
+
+  acceptAnswer = true;
 }
 
 /**
  * check user's answer, update question counter variables
  */
-function checkAnswer(answer) {
+function checkAnswer(event) {
+  if (!acceptAnswer) {
+    return;
+  }
+  acceptAnswer = false;
+
+  let answerContainer = event.target.closest(".choice-container");
+  let answer = answerContainer.querySelector(".choice").innerText;
+
   if (answer === currentQuestion.answer) {
-    console.log("Got it");
+    answerContainer.classList.add("correct");
   } else {
-    console.log("Nah");
+    answerContainer.classList.add("incorrect");
   }
 
   questionNumber++;
   questionIndex++;
 
-  //check if there's any more questions to ask
-  if (questionIndex > questions.length - 1) {
-    console.log("Game Over");
-  } else {
-    nextQuestion();
-  }
+  setTimeout(nextQuestion, 1500);
+  setTimeout(reset, 1500, answerContainer);
 }
 
-function userAnswer(event) {
-  console.log(event.target);
-  let elem = event.target.closest(".choice-container");
-  checkAnswer(elem.querySelector(".choice").innerText);
+/**
+ * remove modified classes from previous questions
+ */
+function reset(container) {
+  container.classList.remove("correct");
+  container.classList.remove("incorrect");
 }
 
 choicesContainer.forEach((elem) => {
-  elem.addEventListener("click", userAnswer);
+  elem.addEventListener("click", checkAnswer);
 });
 
 startQuiz();
