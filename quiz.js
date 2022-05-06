@@ -27,6 +27,9 @@ let questions;
  * Initialize the Quiz and starter variables
  */
 function startQuiz() {
+  if (!acceptAnswer && acceptAnswer !== undefined) {
+    return;
+  }
   questionNumber = 1;
   questionIndex = 0;
   acceptAnswer = true;
