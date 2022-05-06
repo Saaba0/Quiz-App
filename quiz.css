@@ -78,6 +78,11 @@ p {
   color: white;
 }
 
+#footer {
+  display: flex;
+  justify-content: space-between;
+}
+
 #score-sheet {
   font-size: 2em;
   color: white;

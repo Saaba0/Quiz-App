@@ -6,6 +6,7 @@ const choicesContainer = Array.from(
 );
 const questionHead = document.querySelector("#question-header");
 const questionBox = document.querySelector("#question");
+const scoreSheet = document.querySelector("#score-sheet");
 let currentQuestion;
 let questionIndex;
 let questionNumber;
@@ -47,6 +48,8 @@ function startQuiz() {
   questionIndex = 0;
   acceptAnswer = true;
   correctCount = 0;
+  scoreSheet.innerHTML = `Score: ${correctCount}`;
+
   nextQuestion();
 }
 
@@ -71,6 +74,7 @@ function nextQuestion() {
   //update webpage elements
   questionBox.innerText = currentQuestion.question;
   questionHead.innerText = "Question " + questionNumber;
+  scoreSheet.innerHTML = `Score: ${correctCount}`;
 
   for (let i = 0; i < choices.length; i++) {
     choices[i].innerText = currentQuestion["choice" + (i + 1)];
@@ -113,12 +117,7 @@ function reset(container) {
   container.classList.remove("incorrect");
 }
 
-function endGame() {
-  let scoreSheet = document.createElement("div");
-  scoreSheet.setAttribute("id", "score-sheet");
-  scoreSheet.innerHTML = "Score: " + correctCount;
-  document.querySelector(".header-container").append(scoreSheet);
-}
+function endGame() {}
 
 choicesContainer.forEach((elem) => {
   elem.addEventListener("click", checkAnswer);
