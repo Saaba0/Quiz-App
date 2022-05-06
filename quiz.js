@@ -50,6 +50,11 @@ function startQuiz() {
   correctCount = 0;
   scoreSheet.innerHTML = `Score: ${correctCount}`;
 
+  //add event listeners
+  choicesContainer.forEach((elem) => {
+    elem.addEventListener("click", checkAnswer);
+  });
+
   nextQuestion();
 }
 
@@ -119,8 +124,6 @@ function reset(container) {
 
 function endGame() {}
 
-choicesContainer.forEach((elem) => {
-  elem.addEventListener("click", checkAnswer);
-});
+document.querySelector("#restart-button").addEventListener("click", startQuiz);
 
 startQuiz();
