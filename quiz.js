@@ -12,6 +12,7 @@ const scoreSheet = document.querySelector("#score-sheet");
 
 //event listeners
 document.querySelector("#restart-button").addEventListener("click", startQuiz);
+document.querySelector("#new-quiz").addEventListener("click", newQuiz);
 
 //global variables
 let currentQuestion;
@@ -128,7 +129,4 @@ function newQuiz() {
   });
 }
 
-//generate questions, then begin the quiz
-generateNewQuestions().then(() => {
-  startQuiz();
-});
+newQuiz();

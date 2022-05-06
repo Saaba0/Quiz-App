@@ -68,6 +68,7 @@ body {
 #question-header {
   font-size: 2.5em;
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 #question {
@@ -87,7 +88,7 @@ p {
   justify-content: space-between;
   align-items: center;
   color: white;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 #restart-button {
@@ -98,5 +99,16 @@ p {
 }
 
 #restart-button:hover {
+  background-color: rgb(61, 61, 61);
+}
+
+#new-quiz {
+  border: 3px solid black;
+  background-color: grey;
+  padding: 0 1em;
+  cursor: pointer;
+}
+
+#new-quiz:hover {
   background-color: rgb(61, 61, 61);
 }
