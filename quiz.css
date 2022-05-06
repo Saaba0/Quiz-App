@@ -17,6 +17,7 @@ body {
   width: 40%;
   height: 80vh;
   margin: 5% auto 0;
+  user-select: none;
 }
 
 .question-container {
@@ -58,6 +59,10 @@ body {
 }
 
 .footer-style:hover {
+  background-color: rgb(61, 61, 61);
+}
+
+.disabled-button {
   background-color: rgb(61, 61, 61);
 }
 

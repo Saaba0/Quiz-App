@@ -9,10 +9,11 @@ const choicesContainer = Array.from(
 const questionHead = document.querySelector("#question-header");
 const questionBox = document.querySelector("#question");
 const scoreSheet = document.querySelector("#score-sheet");
+const newQuizButton = document.querySelector("#new-quiz");
 
 //event listeners
 document.querySelector("#restart-button").addEventListener("click", startQuiz);
-document.querySelector("#new-quiz").addEventListener("click", newQuiz);
+newQuizButton.addEventListener("click", newQuiz);
 
 //global variables
 let currentQuestion;
@@ -123,10 +124,24 @@ async function generateNewQuestions() {
   questions = data.results;
 }
 
-function newQuiz() {
-  generateNewQuestions().then(() => {
-    startQuiz();
-  });
+function newQuiz(event) {
+  if (event === undefined) {
+    generateNewQuestions().then(() => {
+      startQuiz();
+    });
+  } else {
+    newQuizButton.classList.add("disabled-button");
+    newQuizButton.removeEventListener("click", newQuiz);
+
+    setTimeout(() => {
+      newQuizButton.classList.remove("disabled-button");
+      newQuizButton.addEventListener("click", newQuiz);
+    }, 2000);
+
+    generateNewQuestions().then(() => {
+      startQuiz();
+    });
+  }
 }
 
 newQuiz();
