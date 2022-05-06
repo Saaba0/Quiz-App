@@ -1,5 +1,6 @@
 "use strict";
 
+//element Objects
 const url = "https://opentdb.com/api.php?amount=10&type=multiple";
 const choices = document.body.querySelectorAll(".choice");
 const choicesContainer = Array.from(
@@ -8,7 +9,11 @@ const choicesContainer = Array.from(
 const questionHead = document.querySelector("#question-header");
 const questionBox = document.querySelector("#question");
 const scoreSheet = document.querySelector("#score-sheet");
+
+//event listeners
 document.querySelector("#restart-button").addEventListener("click", startQuiz);
+
+//global variables
 let currentQuestion;
 let questionIndex;
 let questionNumber;
@@ -52,7 +57,6 @@ function nextQuestion() {
 
   //grab current question within question array
   currentQuestion = questions[questionIndex];
-  console.log(currentQuestion);
 
   //update webpage elements
   questionBox.innerHTML = currentQuestion.question;
@@ -111,14 +115,20 @@ function reset(container) {
 /**
  * return the resulting questions fetched from call to OpenTriviaDatabase
  */
-async function generateQuestions() {
+async function generateNewQuestions() {
   const response = await fetch(url);
   const data = await response.json();
 
   questions = data.results;
 }
 
+function newQuiz() {
+  generateNewQuestions().then(() => {
+    startQuiz();
+  });
+}
+
 //generate questions, then begin the quiz
-generateQuestions().then(() => {
+generateNewQuestions().then(() => {
   startQuiz();
 });
