@@ -20,6 +20,10 @@ body {
   user-select: none;
 }
 
+.header-container.inactive {
+  visibility: hidden;
+}
+
 .question-container {
   width: 100%;
   height: 25%;

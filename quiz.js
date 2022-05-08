@@ -6,6 +6,7 @@ const choices = document.body.querySelectorAll(".choice");
 const choicesContainer = Array.from(
   document.querySelectorAll(".choice-container")
 );
+const bodyContainer = document.querySelector(".header-container");
 const questionHead = document.querySelector("#question-header");
 const questionBox = document.querySelector("#question");
 const scoreSheet = document.querySelector("#score-sheet");
@@ -117,9 +118,6 @@ function checkAnswer(event) {
   newQuizButton.classList.add("disabled-button");
   newQuizButton.removeEventListener("click", newQuiz);
 
-  // setTimeout(reset, 1500, answerContainer);
-  // setTimeout(nextQuestion, 1500);
-
   let promise = new Promise((resolve) => {
     setTimeout(() => {
       nextQuestion();
@@ -148,48 +146,21 @@ function reset(container) {
 async function generateNewQuestions(url) {
   const response = await fetch(url);
   const data = await response.json();
-
-  console.log(data);
-
   questions = data.results;
 }
-
-/**
- * used to build a quiz after receiving user customized input
- * @param {*} event
- */
-// function newQuiz(event) {
-//   if (event === undefined) {
-//     generateNewQuestions().then(() => {
-//       startQuiz();
-//     });
-//   } else {
-//     newQuizButton.classList.add("disabled-button");
-//     newQuizButton.removeEventListener("click", newQuiz);
-
-//     setTimeout(() => {
-//       newQuizButton.classList.remove("disabled-button");
-//       newQuizButton.addEventListener("click", newQuiz);
-//     }, 2000);
-
-//     generateNewQuestions().then(() => {
-//       startQuiz();
-//     });
-//   }
-// }
 
 function newQuiz() {
   //show the selection menu again if user selects "New Quiz"
   if (modal.classList.contains("inactive")) {
     modal.classList.remove("inactive");
     overlay.classList.remove("inactive");
+    //hide Quiz
+    bodyContainer.classList.add("inactive");
     return;
   }
 
   let selectedCategory = userCategory.value;
   let userQuestions = userQuestionAmount.value;
-  console.log(selectedCategory);
-  console.log(userQuestions);
 
   if (userQuestions > 0 && userQuestions <= 20) {
     let url = `https://opentdb.com/api.php?amount=${userQuestions}&category=${selectedCategory}&type=multiple`;
@@ -197,6 +168,8 @@ function newQuiz() {
       startQuiz();
       overlay.classList.add("inactive");
       modal.classList.add("inactive");
+      //Show Quiz
+      bodyContainer.classList.remove("inactive");
     });
   } else {
     console.log("nah bruh");
