@@ -11,3 +11,4 @@
 - HTML
 - CSS
 - Javascript
+- <a href="https://opentdb.com/api_config.php">Open Trivia Database API</a>
