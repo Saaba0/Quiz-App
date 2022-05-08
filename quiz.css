@@ -62,10 +62,6 @@ body {
   background-color: rgb(61, 61, 61);
 }
 
-.disabled-button {
-  background-color: rgb(61, 61, 61);
-}
-
 .correct {
   background-color: #1fbe1f;
 }
@@ -82,6 +78,37 @@ body {
   background-color: rgb(209, 0, 0);
 }
 
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  border: 3px solid black;
+  z-index: 10;
+  background-color: white;
+  width: 30vw;
+  max-width: 80%;
+}
+
+.modal.inactive {
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem, 0;
+}
+
+.header-text {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
 #question-header {
   font-size: 2.5em;
   margin-top: 0;
@@ -93,6 +120,34 @@ body {
   width: 80%;
   text-align: center;
   margin: auto;
+}
+
+#question-amount {
+  margin-top: 5px;
+}
+
+#categories {
+  margin-top: 5px;
+}
+
+#submit-quiz {
+  margin-top: 3px;
+  margin-bottom: 0.5rem;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#overlay.inactive {
+  opacity: 0;
+  pointer-events: none;
 }
 
 p {

@@ -1,7 +1,7 @@
 "use strict";
 
 //element Objects
-const url = "https://opentdb.com/api.php?amount=10&type=multiple";
+let url = "https://opentdb.com/api.php?amount=10&type=multiple";
 const choices = document.body.querySelectorAll(".choice");
 const choicesContainer = Array.from(
   document.querySelectorAll(".choice-container")
@@ -10,10 +10,16 @@ const questionHead = document.querySelector("#question-header");
 const questionBox = document.querySelector("#question");
 const scoreSheet = document.querySelector("#score-sheet");
 const newQuizButton = document.querySelector("#new-quiz");
+const modal = document.querySelector(".modal");
+const userCategory = document.querySelector("#categories");
+const userQuestionAmount = document.querySelector("#question-amount");
+const submitButton = document.querySelector("#submit-quiz");
+const overlay = document.querySelector("#overlay");
 
 //event listeners
 document.querySelector("#restart-button").addEventListener("click", startQuiz);
 newQuizButton.addEventListener("click", newQuiz);
+submitButton.addEventListener("click", newQuiz);
 
 //global variables
 let currentQuestion;
@@ -56,6 +62,8 @@ function nextQuestion() {
     choicesContainer.forEach((elem) => {
       elem.removeEventListener("click", checkAnswer);
     });
+
+    acceptAnswer = true;
 
     return;
   }
@@ -120,31 +128,60 @@ function reset(container) {
 /**
  * return the resulting questions fetched from call to OpenTriviaDatabase
  */
-async function generateNewQuestions() {
+async function generateNewQuestions(url) {
   const response = await fetch(url);
   const data = await response.json();
+
+  console.log(data);
 
   questions = data.results;
 }
 
-function newQuiz(event) {
-  if (event === undefined) {
-    generateNewQuestions().then(() => {
+/**
+ * used to build a quiz after receiving user customized input
+ * @param {*} event
+ */
+// function newQuiz(event) {
+//   if (event === undefined) {
+//     generateNewQuestions().then(() => {
+//       startQuiz();
+//     });
+//   } else {
+//     newQuizButton.classList.add("disabled-button");
+//     newQuizButton.removeEventListener("click", newQuiz);
+
+//     setTimeout(() => {
+//       newQuizButton.classList.remove("disabled-button");
+//       newQuizButton.addEventListener("click", newQuiz);
+//     }, 2000);
+
+//     generateNewQuestions().then(() => {
+//       startQuiz();
+//     });
+//   }
+// }
+
+function newQuiz() {
+  //show the selection menu again if user selects "New Quiz"
+  if (modal.classList.contains("inactive")) {
+    modal.classList.remove("inactive");
+    overlay.classList.remove("inactive");
+    return;
+  }
+
+  let selectedCategory = userCategory.value;
+  let userQuestions = userQuestionAmount.value;
+  console.log(selectedCategory);
+  console.log(userQuestions);
+
+  if (userQuestions > 0 && userQuestions < 20) {
+    let url = `https://opentdb.com/api.php?amount=${userQuestions}&category=${selectedCategory}&type=multiple`;
+    generateNewQuestions(url).then(() => {
       startQuiz();
+      overlay.classList.add("inactive");
+      modal.classList.add("inactive");
     });
   } else {
-    newQuizButton.classList.add("disabled-button");
-    newQuizButton.removeEventListener("click", newQuiz);
-
-    setTimeout(() => {
-      newQuizButton.classList.remove("disabled-button");
-      newQuizButton.addEventListener("click", newQuiz);
-    }, 2000);
-
-    generateNewQuestions().then(() => {
-      startQuiz();
-    });
+    console.log("nah bruh");
   }
 }
-
-newQuiz();
