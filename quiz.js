@@ -147,6 +147,7 @@ async function generateNewQuestions(url) {
   const response = await fetch(url);
   const data = await response.json();
   questions = data.results;
+  console.log(data);
 }
 
 function newQuiz() {
@@ -171,7 +172,5 @@ function newQuiz() {
       //Show Quiz
       bodyContainer.classList.remove("inactive");
     });
-  } else {
-    console.log("nah bruh");
   }
 }
