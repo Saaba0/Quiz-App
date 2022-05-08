@@ -113,8 +113,25 @@ function checkAnswer(event) {
   questionNumber++;
   questionIndex++;
 
-  setTimeout(nextQuestion, 1500);
-  setTimeout(reset, 1500, answerContainer);
+  //disable creating new quizzes until answer is settled
+  newQuizButton.classList.add("disabled-button");
+  newQuizButton.removeEventListener("click", newQuiz);
+
+  // setTimeout(reset, 1500, answerContainer);
+  // setTimeout(nextQuestion, 1500);
+
+  let promise = new Promise((resolve) => {
+    setTimeout(() => {
+      nextQuestion();
+      reset(answerContainer);
+      resolve();
+    }, 1500);
+  });
+
+  promise.then(() => {
+    newQuizButton.classList.remove("disabled-button");
+    newQuizButton.addEventListener("click", newQuiz);
+  });
 }
 
 /**
@@ -174,7 +191,7 @@ function newQuiz() {
   console.log(selectedCategory);
   console.log(userQuestions);
 
-  if (userQuestions > 0 && userQuestions < 20) {
+  if (userQuestions > 0 && userQuestions <= 20) {
     let url = `https://opentdb.com/api.php?amount=${userQuestions}&category=${selectedCategory}&type=multiple`;
     generateNewQuestions(url).then(() => {
       startQuiz();
