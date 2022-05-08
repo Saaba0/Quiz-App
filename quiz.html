@@ -9,7 +9,7 @@
     <script defer src="quiz.js"></script>
   </head>
   <body>
-    <div class="header-container">
+    <div class="header-container inactive">
       <div class="question-container">
         <h1 id="question-header">Question</h1>
         <p id="question"></p>
@@ -39,5 +39,26 @@
         </a>
       </div>
     </div>
+    <div class="modal">
+      <div class="modal-header">
+        <h1 class="header-text">Create your Quiz</h1>
+      </div>
+      <div class="modal-categories">
+        <span>Category: </span>
+        <select id="categories">
+          <option value="9">General Knowledge</option>
+          <option value="18">Science: Computer</option>
+          <option value="31">Entertainment: Japanese Anime & Manga</option>
+          <option value="25">Art</option>
+        </select>
+      </div>
+      <div class="modal-question-amount">
+        <span>Amount of Questions (Max 20):</span>
+        <input id="question-amount" type="number" />
+      </div>
+
+      <button id="submit-quiz">Generate Quiz</button>
+    </div>
+    <div id="overlay"></div>
   </body>
 </html>
