@@ -1,5 +1,5 @@
 <h1 align="center">
-<a href="https://saaba0.github.io/Quiz-App/">Quiz App</a>
+<a href="https://nathan-albino.github.io/Quiz-App/">Quiz App</a>
 </h1>
 
 <p align="center">Quiz App is a personal project that lets you play customizable quizzes in your browser.</p>
